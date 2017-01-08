@@ -1,0 +1,65 @@
+
+
+class Table(object):
+    #Method for initilizing the rows and columns
+    def __init__(self, rows, cols):
+        self.rows = rows
+        self.cols = cols
+
+    #Method for asking the user what integer values they would like to enter into the table
+    def addTable(self, table):
+        #For loop to go through the rows
+        for i in range(self.rows):
+            r=i+1
+            print("Enter the contents for row %d" %r)
+            c = list() #List created for each row
+            #For loop to enter the contents in the column of each row
+            for j in range(self.cols):
+                contents = raw_input()
+                contents=int(contents)
+                c.append(contents)
+            table.append(c)
+
+    #Method to arrange the rows in the proper order based on the column given by the user
+    def arrange(self, k, table):
+        temp = list()
+        #For loop to go through the rows in the table
+        for i in range(len(table)):
+            min = i #The current row is by default the minimum row
+            #For loop to go through each row in the table and compare the user given columm to arrange by
+            for j in range((i + 1), len(table)):
+                #If statement to compare the column by of the minimum row with the next row; if the statemet is true the row is the new minimum
+                if table[min][k] > table[j][k]:
+                    min = j
+            #Swap the rows with the minimum row going in the next spot in the beginning
+            temp = table[i]
+            table[i] = table[min]
+            table[min] = temp
+
+    #Method to print the table after it is arranged in the proper order
+    def printTable(self, table):
+        for i in range(len(table)):
+            table[i] = map(str, table[i])
+            print(" ".join(table[i]))
+
+if __name__ == '__main__':
+
+    print("hello from sort data")
+
+    rows=raw_input("What is the number of rows you would like to enter: ")
+    cols = raw_input("What is the number of columns you would like to enter: ")
+    rows=int(rows)
+    cols=int(cols)
+
+    t = Table(rows,cols)
+
+    table = list()
+    t.addTable(table)
+
+    k = raw_input("Enter the column number you would like to arrange it by: ")
+    k = int(k)
+    k=k-1
+
+    t.arrange(k, table)
+
+    t.printTable(table)
